@@ -6,10 +6,15 @@
         <artifactId>parent</artifactId>
         <groupId>cn.charlie</groupId>
         <version>1.0.0</version>
+        <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>parent-api</artifactId>
+    <artifactId>member</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>member-server</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
