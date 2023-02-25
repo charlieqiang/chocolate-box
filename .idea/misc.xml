@@ -9,6 +9,8 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/parent/pom.xml" />
+        <option value="$PROJECT_DIR$/parent/parent-server/pom.xml" />
+        <option value="$PROJECT_DIR$/parent/parent-api/pom.xml" />
       </list>
     </option>
   </component>
