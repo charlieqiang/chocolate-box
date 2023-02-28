@@ -1,4 +1,4 @@
-package cn.charlie.member.login.web;
+package cn.charlie.member.login.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
