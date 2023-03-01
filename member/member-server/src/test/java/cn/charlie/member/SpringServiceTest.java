@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -34,17 +35,23 @@ public abstract class SpringServiceTest {
     protected MockMvc mvc;
 
     protected String returnGetResponseContent(String url, Map<String, String> headers) throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
-        MvcResult mvcResult = mvc.perform(getMockHttpServletRequestBuilder(requestBuilder, headers)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding(UTF_8))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+        ResultActions resultActions = returnGetResultActions(url, headers);
+        MvcResult mvcResult = resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
         mvcResult.getResponse().setCharacterEncoding(UTF_8);
         return mvcResult.getResponse().getContentAsString();
+    }
+
+    protected ResultActions returnGetResultActions(String url, Map<String, String> headers) throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
+        ResultActions resultActions = mvc.perform(getMockHttpServletRequestBuilder(requestBuilder, headers)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding(UTF_8));
+
+        return resultActions;
     }
 
     private MockHttpServletRequestBuilder getMockHttpServletRequestBuilder(MockHttpServletRequestBuilder requestBuilder, Map<String, String> headers) {
@@ -59,18 +66,25 @@ public abstract class SpringServiceTest {
     }
 
     protected String returnPostResponseContent(String url, Object request, Map<String, String> headers) throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post(url);
-        MvcResult mvcResult = mvc.perform(getMockHttpServletRequestBuilder(requestBuilder, headers)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding(UTF_8)
-                .content(JSON.toJSONString(request)))
+        ResultActions resultActions = returnPostResultActions(url, request, headers);
+        MvcResult mvcResult = resultActions
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
         mvcResult.getResponse().setCharacterEncoding(UTF_8);
         return mvcResult.getResponse().getContentAsString();
+    }
+
+    protected ResultActions returnPostResultActions(String url, Object request, Map<String, String> headers) throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post(url);
+        ResultActions resultActions = mvc.perform(getMockHttpServletRequestBuilder(requestBuilder, headers)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding(UTF_8)
+                .content(JSON.toJSONString(request)));
+
+        return resultActions;
     }
 
     protected String returnPutResponseContent(String url, Object request, Map<String, String> headers) throws Exception {
