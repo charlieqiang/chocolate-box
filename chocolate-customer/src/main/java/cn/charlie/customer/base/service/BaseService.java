@@ -1,4 +1,4 @@
-package cn.charlie.customer.service.base;
+package cn.charlie.customer.base.service;
 
 /**
  * @author charlie

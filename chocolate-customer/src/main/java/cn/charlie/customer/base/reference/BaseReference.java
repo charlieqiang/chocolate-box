@@ -1,4 +1,4 @@
-package cn.charlie.customer.reference.base;
+package cn.charlie.customer.base.reference;
 
 import cn.charlie.common.dubbo.api.base.BaseClient;
 import com.alibaba.dubbo.config.annotation.Reference;

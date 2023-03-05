@@ -1,6 +1,6 @@
-package cn.charlie.customer.service.base;
+package cn.charlie.customer.base.service;
 
-import cn.charlie.customer.reference.base.BaseReference;
+import cn.charlie.customer.base.reference.BaseReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

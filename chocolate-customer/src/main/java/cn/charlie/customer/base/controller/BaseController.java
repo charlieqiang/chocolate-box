@@ -1,6 +1,6 @@
-package cn.charlie.customer.controller.base;
+package cn.charlie.customer.base.controller;
 
-import cn.charlie.customer.service.base.BaseService;
+import cn.charlie.customer.base.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
