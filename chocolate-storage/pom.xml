@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chocolate-order</artifactId>
+    <artifactId>chocolate-storage</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

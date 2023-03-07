@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 3/5/2023 10:39 PM
  **/
 @Table(name = "member_info")
-public class Info implements Serializable {
+public class MemberInfo implements Serializable {
 
     private static final long serialVersionUID = -5415250504457234522L;
 

@@ -9,6 +9,7 @@
         <module>chocolate-order</module>
         <module>chocolate-customer</module>
         <module>chocolate-member</module>
+        <module>chocolate-storage</module>
     </modules>
 
     <groupId>cn.charlie</groupId>

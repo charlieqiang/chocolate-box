@@ -1,7 +1,7 @@
 package cn.charlie.member.info.controller;
 
-import cn.charlie.member.info.entity.Info;
-import cn.charlie.member.info.service.InfoService;
+import cn.charlie.member.info.entity.MemberInfo;
+import cn.charlie.member.info.service.MemberInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +15,12 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/member/info")
-public class InfoController {
+public class MemberInfoController {
     @Autowired
-    private InfoService infoService;
+    private MemberInfoService memberInfoService;
 
     @GetMapping("")
-    public List<Info> getAllMemberInfo() {
-        return infoService.getAllMemberInfo();
+    public List<MemberInfo> getAllMemberInfo() {
+        return memberInfoService.getAllMemberInfo();
     }
 }
