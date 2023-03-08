@@ -10,6 +10,7 @@
         <module>chocolate-customer</module>
         <module>chocolate-member</module>
         <module>chocolate-storage</module>
+        <module>chocolate-gateway</module>
     </modules>
 
     <groupId>cn.charlie</groupId>

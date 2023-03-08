@@ -14,7 +14,7 @@ import java.util.List;
  * @date 3/5/2023 10:32 PM
  **/
 @RestController
-@RequestMapping("/member/info")
+@RequestMapping("/info")
 public class MemberInfoController {
     @Autowired
     private MemberInfoService memberInfoService;

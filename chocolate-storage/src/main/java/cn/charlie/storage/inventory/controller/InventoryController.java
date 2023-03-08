@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 3/6/2023 11:28 PM
  **/
 @RestController
-@RequestMapping("/storage/inventory")
+@RequestMapping("/inventory")
 public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
