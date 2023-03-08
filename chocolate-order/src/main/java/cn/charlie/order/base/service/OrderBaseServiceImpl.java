@@ -40,7 +40,6 @@ public class OrderBaseServiceImpl implements OrderBaseService {
     }
 
     public OrderInfo createOrderInfo(OrderParam orderParam) throws Exception {
-        int i = 1/0;
         OrderInfo orderInfo = buildOrderInfo(orderParam);
         int affectedRows = orderBaseMapper.insert(orderInfo);
         if (affectedRows > 0) {

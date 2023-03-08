@@ -16,13 +16,21 @@ public class MemberInfo implements Serializable {
     private static final long serialVersionUID = -5415250504457234522L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * 姓名
+     */
     private String name;
 
+    /**
+     * 年龄
+     */
     private Integer age;
 
+    /**
+     * 性别
+     */
     private String sex;
 
     public Long getId() {

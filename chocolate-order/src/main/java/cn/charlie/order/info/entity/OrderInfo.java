@@ -17,14 +17,29 @@ public class OrderInfo {
     @Id
     private Long id;
 
+    /**
+     * 订单编号
+     */
     private String orderNo;
 
+    /**
+     * 订单数量
+     */
     private Integer orderQty;
 
+    /**
+     * 订单金额
+     */
     private BigDecimal orderAmount;
 
+    /**
+     * 客户id
+     */
     private Long customId;
 
+    /**
+     * 物品id
+     */
     private Long itemId;
 
     public Long getId() {

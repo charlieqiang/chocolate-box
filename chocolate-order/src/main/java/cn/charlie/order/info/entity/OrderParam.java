@@ -10,12 +10,24 @@ import java.math.BigDecimal;
 public class OrderParam implements Serializable {
     private static final long serialVersionUID = 8972840498692463839L;
 
+    /**
+     * 客户id
+     */
     private Long customId;
 
+    /**
+     * 物品id
+     */
     private Long itemId;
 
+    /**
+     * 订单数量
+     */
     private Integer orderQty;
 
+    /**
+     * 订单金额
+     */
     private BigDecimal orderAmount;
 
     public Long getCustomId() {

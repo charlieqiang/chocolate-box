@@ -12,8 +12,8 @@ public interface InventoryMapper extends Mapper<Inventory> {
     /**
      * 通过ItemId操作库存
      *
-     * @param itemId itemId
-     * @param operateQty operateQty
+     * @param itemId 物品id
+     * @param operateQty 操作数量
      * @return 成功/失败
      */
     @Update("update inventory set inventory_qty = inventory_qty + (#{operateQty}) where item_id = #{itemId}")

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Table(name = "inventory")
 public class Inventory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long itemId;

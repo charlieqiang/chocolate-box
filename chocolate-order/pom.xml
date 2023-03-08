@@ -60,19 +60,19 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!--seata-->
+        <!-- seata -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
             <exclusions>
-                <!--移除掉该starter中自带的依赖，该依赖版本较低-->
+                <!-- 移除掉该starter中自带的依赖，该依赖版本较低 -->
                 <exclusion>
                     <groupId>io.seata</groupId>
                     <artifactId>seata-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--单独添加seata 1.3.0的依赖-->
+        <!-- 单独添加seata 1.3.0的依赖 -->
         <dependency>
             <groupId>io.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>
