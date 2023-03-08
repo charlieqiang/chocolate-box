@@ -1,5 +1,6 @@
 package cn.charlie.order.base.service;
 
+import cn.charlie.common.entity.snowflakeid.SnowflakeIdWorker;
 import cn.charlie.order.base.reference.InventoryReference;
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
@@ -51,7 +52,7 @@ public class OrderBaseServiceImpl implements OrderBaseService {
 
     private OrderInfo buildOrderInfo(OrderParam orderParam) {
         OrderInfo orderInfo = new OrderInfo();
-        Long id = 7038399168028995584L;
+        Long id = SnowflakeIdWorker.getInstance().nextId();
         orderInfo.setId(id);
         orderInfo.setItemId(orderParam.getItemId());
         orderInfo.setCustomId(orderParam.getCustomId());
