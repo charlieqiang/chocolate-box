@@ -1,4 +1,4 @@
-package cn.charlie.order.base.reference;
+package cn.charlie.order.info.reference;
 
 import cn.charlie.common.dubbo.api.storage.invtory.InventoryClient;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;

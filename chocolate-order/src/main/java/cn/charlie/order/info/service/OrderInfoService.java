@@ -1,4 +1,4 @@
-package cn.charlie.order.base.service;
+package cn.charlie.order.info.service;
 
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
@@ -7,7 +7,7 @@ import cn.charlie.order.info.entity.OrderParam;
  * @author charlie
  * @date 3/7/2023 9:14 AM
  **/
-public interface OrderBaseService {
+public interface OrderInfoService {
     /**
      * 下单接口
      *

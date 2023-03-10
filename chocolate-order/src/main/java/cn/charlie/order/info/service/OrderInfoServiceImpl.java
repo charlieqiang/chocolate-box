@@ -1,10 +1,13 @@
-package cn.charlie.order.base.service;
+package cn.charlie.order.info.service;
 
-import cn.charlie.common.entity.snowflakeid.SnowflakeIdWorker;
-import cn.charlie.order.base.reference.InventoryReference;
+import cn.charlie.order.info.message.constant.OrderInfoTag;
+import cn.charlie.order.info.message.constant.OrderInfoTopic;
+import cn.charlie.order.info.message.producer.OrderInfoProducer;
+import cn.charlie.order.info.reference.InventoryReference;
+import cn.charlie.order.info.service.builder.OrderInfoBuilder;
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
-import cn.charlie.order.base.mapper.OrderBaseMapper;
+import cn.charlie.order.info.mapper.OrderInfoMapper;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,15 @@ import org.springframework.util.ObjectUtils;
  * @date 3/7/2023 9:15 AM
  **/
 @Service
-public class OrderBaseServiceImpl implements OrderBaseService {
+public class OrderInfoServiceImpl implements OrderInfoService {
     @Autowired
-    private OrderBaseMapper orderBaseMapper;
+    private OrderInfoMapper orderInfoMapper;
 
     @Autowired
     private InventoryReference inventoryReference;
+
+    @Autowired
+    private OrderInfoProducer orderInfoProducer;
 
     @Override
     @GlobalTransactional
@@ -34,30 +40,21 @@ public class OrderBaseServiceImpl implements OrderBaseService {
         Boolean isDeducted = inventoryReference.operateInventoryByItemId(itemId, operateQty);
 
         if (isDeducted) {
-            return createOrderInfo(orderParam);
+            OrderInfo orderInfo = createOrderInfo(orderParam);
+            orderInfoProducer.sendMessage("下单接口: 下单成功!", OrderInfoTopic.SYNC_ORDER_INFO, OrderInfoTag.ORDER_INFO_TAG);
+            return orderInfo;
         } else {
             throw new Exception("下单接口: 库存扣减失败!");
         }
     }
 
     public OrderInfo createOrderInfo(OrderParam orderParam) throws Exception {
-        OrderInfo orderInfo = buildOrderInfo(orderParam);
-        int affectedRows = orderBaseMapper.insert(orderInfo);
+        OrderInfo orderInfo = OrderInfoBuilder.buildOrderInfo(orderParam);
+        int affectedRows = orderInfoMapper.insert(orderInfo);
         if (affectedRows > 0) {
             return orderInfo;
         } else {
             throw new Exception("下单接口: 订单创建失败!");
         }
-    }
-
-    private OrderInfo buildOrderInfo(OrderParam orderParam) {
-        OrderInfo orderInfo = new OrderInfo();
-        Long id = SnowflakeIdWorker.getInstance().nextId();
-        orderInfo.setId(id);
-        orderInfo.setItemId(orderParam.getItemId());
-        orderInfo.setCustomId(orderParam.getCustomId());
-        orderInfo.setOrderQty(orderParam.getOrderQty());
-        orderInfo.setOrderAmount(orderInfo.getOrderAmount());
-        return orderInfo;
     }
 }

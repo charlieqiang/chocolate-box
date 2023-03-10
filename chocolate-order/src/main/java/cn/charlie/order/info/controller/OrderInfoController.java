@@ -1,6 +1,6 @@
 package cn.charlie.order.info.controller;
 
-import cn.charlie.order.base.service.OrderBaseService;
+import cn.charlie.order.info.service.OrderInfoService;
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/info")
 public class OrderInfoController {
     @Autowired
-    OrderBaseService orderBaseService;
+    private OrderInfoService orderInfoService;
 
     @PostMapping("")
     public OrderInfo bookingOrder(@RequestBody OrderParam orderParam) throws Exception {
-        return orderBaseService.bookingOrder(orderParam);
+        return orderInfoService.bookingOrder(orderParam);
     }
 }
