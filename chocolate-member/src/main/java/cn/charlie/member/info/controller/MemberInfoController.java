@@ -1,11 +1,9 @@
 package cn.charlie.member.info.controller;
 
 import cn.charlie.member.info.entity.MemberInfo;
+import cn.charlie.member.info.entity.MemberInfoParam;
 import cn.charlie.member.info.service.MemberInfoService;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,46 +22,28 @@ public class MemberInfoController {
     @Autowired
     private MemberInfoService memberInfoService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private RedissonClient redissonClient;
-
     @GetMapping("")
     public List<MemberInfo> getAllMemberInfo() {
         return memberInfoService.getAllMemberInfo();
     }
 
-    private static final String MEMBER_INFO_NAME_KEY = "MEMBER_INFO_NAME_KEY";
-    private static final String MEMBER_INFO_NAME_LOCK = "MEMBER_INFO_NAME_LOCK";
-
     @PostMapping("/name")
-    public String addMemberName(@RequestBody String name) throws Exception {
-        RLock nameLock = redissonClient.getLock(MEMBER_INFO_NAME_LOCK);
-
-        if (nameLock.isLocked()) {
-            throw new Exception("用户名称添加中...");
-        }
-        nameLock.lock();
-        try {
-            redisTemplate.opsForValue().set(MEMBER_INFO_NAME_KEY, name);
-        } catch (Exception e) {
-            System.out.println("用户名称添加失败: " + e);
-            throw new Exception("用户名称添加失败", e);
-        } finally {
-            nameLock.unlock();
-        }
-        return name;
+    public String addMemberNameByRedis(@RequestBody String name) throws Exception {
+        return memberInfoService.addMemberNameByRedis(name);
     }
 
     @GetMapping("/name")
-    public String getMemberName() {
-        Object name = redisTemplate.opsForValue().get(MEMBER_INFO_NAME_KEY);
-        if (null == name) {
-            return "";
-        }
-        System.out.println(name);
-        return name.toString();
+    public String getMemberNameByRedis() {
+        return memberInfoService.getMemberNameByRedis();
+    }
+
+    @PostMapping("/es")
+    public MemberInfo createMemberInfoByEs(@RequestBody MemberInfoParam memberInfoParam) throws Exception {
+        return memberInfoService.createMemberInfoByEs(memberInfoParam);
+    }
+
+    @GetMapping("/es")
+    public List<MemberInfo> getAllMemberInfoByEs() {
+        return memberInfoService.getAllMemberInfoByEs();
     }
 }

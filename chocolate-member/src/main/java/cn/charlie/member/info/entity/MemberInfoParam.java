@@ -1,23 +1,14 @@
 package cn.charlie.member.info.entity;
 
-import cn.easyes.annotation.IndexId;
-import cn.easyes.annotation.rely.IdType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * @author charlie
- * @date 3/5/2023 10:39 PM
+ * @date 3/13/2023 10:06 AM
  **/
-@Table(name = "member_info")
-public class MemberInfo implements Serializable {
+public class MemberInfoParam implements Serializable {
 
-    private static final long serialVersionUID = -5415250504457234522L;
-
-    @Id
-    @IndexId(type = IdType.CUSTOMIZE)
-    private Long id;
+    private static final long serialVersionUID = -2029732051027322045L;
 
     /**
      * 姓名
@@ -33,14 +24,6 @@ public class MemberInfo implements Serializable {
      * 性别
      */
     private String sex;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
