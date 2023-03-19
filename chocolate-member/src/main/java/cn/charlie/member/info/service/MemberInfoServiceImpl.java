@@ -11,6 +11,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -99,5 +100,12 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         }
         System.out.println(name);
         return name.toString();
+    }
+
+    @Override
+    @Transactional
+    public String addNameInTransactionByRedis(String name) {
+        redisTemplate.opsForValue().set(MEMBER_INFO_NAME_KEY, name);
+        return name;
     }
 }

@@ -46,4 +46,9 @@ public class MemberInfoController {
     public List<MemberInfo> getAllMemberInfoByEs() {
         return memberInfoService.getAllMemberInfoByEs();
     }
+
+    @PostMapping("/tx/name")
+    public String addNameInTransactionByRedis(@RequestBody String name) throws Exception {
+        return memberInfoService.addNameInTransactionByRedis(name);
+    }
 }

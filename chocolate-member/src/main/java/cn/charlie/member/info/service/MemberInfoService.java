@@ -47,4 +47,12 @@ public interface MemberInfoService {
      * @return 结果
      */
     String getMemberNameByRedis();
+
+    /**
+     * 通过事务添加成员姓名到Redis缓存
+     *
+     * @param name 姓名
+     * @return 结果
+     */
+    String addNameInTransactionByRedis(String name);
 }
