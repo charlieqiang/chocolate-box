@@ -22,7 +22,7 @@ public class SnowflakeIdWorker extends SnowflakeIdWorkerGenerator {
     }
 
     public static SnowflakeIdWorker getInstance() {
-        //双重检测机制
+        // 双重检测机制
         if (singleton == null) {
             synchronized (SnowflakeIdWorker.class) {
                 if (singleton == null) {

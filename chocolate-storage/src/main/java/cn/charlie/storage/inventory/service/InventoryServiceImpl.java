@@ -1,5 +1,6 @@
 package cn.charlie.storage.inventory.service;
 
+import cn.charlie.storage.inventory.entity.Inventory;
 import cn.charlie.storage.inventory.mapper.InventoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,10 @@ public class InventoryServiceImpl implements InventoryService {
     public Boolean operateInventoryByItemId(Long itemId, Integer operateQty) {
         int affectedRows = inventoryMapper.deductInventoryByItemId(itemId, operateQty);
         return affectedRows > 0;
+    }
+
+    @Override
+    public Inventory queryInventoryByItemId(Long itemId) {
+        return inventoryMapper.queryInventoryByItemId(itemId);
     }
 }
