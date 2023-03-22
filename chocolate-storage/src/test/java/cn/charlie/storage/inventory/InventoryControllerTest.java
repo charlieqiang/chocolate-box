@@ -28,20 +28,27 @@ public class InventoryControllerTest extends SpringServiceTest {
 
     @Test
     @Order(1)
-    public void operateInventoryByItemId() throws Exception {
-        final Map<String, String> header = Maps.newHashMap();
+    public void operateInventoryByItemIdAndTestInventory() throws Exception {
         InventoryParam inventoryParam = InventoryParamBuilder.buildInventoryParam();
         Long itemId = inventoryParam.getItemId();
+        Integer operateQty = inventoryParam.getOperateQty();
         Inventory inventoryBefore = inventoryMapper.queryInventoryByItemId(itemId);
-
+        final Map<String, String> header = Maps.newHashMap();
         ResultActions resultActions = returnPutResultActions("/inventory", inventoryParam, header);
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+        String exp = "$.data";
+        Boolean expectedValue = true;
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath(exp).value(expectedValue));
 
         Inventory inventoryAfter = inventoryMapper.queryInventoryByItemId(itemId);
+        testInventory(inventoryBefore, inventoryAfter, operateQty);
+    }
 
+    private void testInventory(Inventory inventoryBefore, Inventory inventoryAfter, Integer operatedQty) {
         int inventoryBeforeQty = inventoryBefore.getInventoryQty();
         int inventoryAfterQty = inventoryAfter.getInventoryQty();
-        int expectQty = inventoryBeforeQty + inventoryParam.getOperateQty();
+        int expectQty = inventoryBeforeQty + operatedQty;
         Assertions.assertEquals(expectQty, inventoryAfterQty);
     }
 }

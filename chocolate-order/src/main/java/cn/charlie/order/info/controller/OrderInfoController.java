@@ -1,5 +1,6 @@
 package cn.charlie.order.info.controller;
 
+import cn.charlie.common.entity.base.Result;
 import cn.charlie.order.info.service.OrderInfoService;
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
@@ -20,7 +21,7 @@ public class OrderInfoController {
     private OrderInfoService orderInfoService;
 
     @PostMapping("")
-    public OrderInfo bookingOrder(@RequestBody OrderParam orderParam) throws Exception {
-        return orderInfoService.bookingOrder(orderParam);
+    public Result<OrderInfo> bookingOrder(@RequestBody OrderParam orderParam) throws Exception {
+        return Result.success(orderInfoService.bookingOrder(orderParam));
     }
 }

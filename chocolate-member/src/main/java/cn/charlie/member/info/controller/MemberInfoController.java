@@ -1,5 +1,6 @@
 package cn.charlie.member.info.controller;
 
+import cn.charlie.common.entity.base.Result;
 import cn.charlie.member.info.entity.MemberInfo;
 import cn.charlie.member.info.entity.MemberInfoParam;
 import cn.charlie.member.info.service.MemberInfoService;
@@ -23,32 +24,32 @@ public class MemberInfoController {
     private MemberInfoService memberInfoService;
 
     @GetMapping("")
-    public List<MemberInfo> getAllMemberInfo() {
-        return memberInfoService.getAllMemberInfo();
+    public Result<List<MemberInfo>> getAllMemberInfo() {
+        return Result.success(memberInfoService.getAllMemberInfo());
     }
 
     @PostMapping("/name")
-    public String addMemberNameByRedis(@RequestBody String name) throws Exception {
-        return memberInfoService.addMemberNameByRedis(name);
+    public Result<String> addMemberNameByRedis(@RequestBody String name) throws Exception {
+        return Result.success(memberInfoService.addMemberNameByRedis(name));
     }
 
     @GetMapping("/name")
-    public String getMemberNameByRedis() {
-        return memberInfoService.getMemberNameByRedis();
+    public Result<String> getMemberNameByRedis() {
+        return Result.success(memberInfoService.getMemberNameByRedis());
     }
 
     @PostMapping("/es")
-    public MemberInfo createMemberInfoByEs(@RequestBody MemberInfoParam memberInfoParam) throws Exception {
-        return memberInfoService.createMemberInfoByEs(memberInfoParam);
+    public Result<MemberInfo> createMemberInfoByEs(@RequestBody MemberInfoParam memberInfoParam) throws Exception {
+        return Result.success(memberInfoService.createMemberInfoByEs(memberInfoParam));
     }
 
     @GetMapping("/es")
-    public List<MemberInfo> getAllMemberInfoByEs() {
-        return memberInfoService.getAllMemberInfoByEs();
+    public Result<List<MemberInfo>> getAllMemberInfoByEs() {
+        return Result.success(memberInfoService.getAllMemberInfoByEs());
     }
 
     @PostMapping("/tx/name")
-    public String addNameInTransactionByRedis(@RequestBody String name) throws Exception {
-        return memberInfoService.addNameInTransactionByRedis(name);
+    public Result<String> addNameInTransactionByRedis(@RequestBody String name) throws Exception {
+        return Result.success(memberInfoService.addNameInTransactionByRedis(name));
     }
 }

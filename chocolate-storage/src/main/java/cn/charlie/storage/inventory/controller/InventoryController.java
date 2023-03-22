@@ -1,5 +1,6 @@
 package cn.charlie.storage.inventory.controller;
 
+import cn.charlie.common.entity.base.Result;
 import cn.charlie.storage.inventory.entity.InventoryParam;
 import cn.charlie.storage.inventory.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class InventoryController {
      * @return 成功/失败
      */
     @PutMapping("")
-    public Boolean operateInventoryByItemId(@RequestBody InventoryParam inventoryParam) {
+    public Result<Boolean> operateInventoryByItemId(@RequestBody InventoryParam inventoryParam) {
         if (ObjectUtils.isEmpty(inventoryParam)) {
-            return false;
+            return Result.success(false);
         }
         Long itemId = inventoryParam.getItemId();
         Integer operateQty = inventoryParam.getOperateQty();
-        return inventoryService.operateInventoryByItemId(itemId, operateQty);
+        return Result.success(inventoryService.operateInventoryByItemId(itemId, operateQty));
     }
 }
