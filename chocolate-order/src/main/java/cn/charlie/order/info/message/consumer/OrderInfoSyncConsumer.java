@@ -1,11 +1,13 @@
 package cn.charlie.order.info.message.consumer;
 
 import cn.charlie.order.info.message.constant.OrderInfoMessageGroup;
+import cn.charlie.order.info.message.constant.OrderInfoTag;
 import cn.charlie.order.info.message.constant.OrderInfoTopic;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,9 @@ import java.text.MessageFormat;
 @Component
 @RocketMQMessageListener(
         topic = OrderInfoTopic.SYNC_ORDER_INFO,
-        consumerGroup = OrderInfoMessageGroup.SYNC_ORDER_INFO_GROUP
+        consumerGroup = OrderInfoMessageGroup.SYNC_ORDER_INFO_GROUP,
+        selectorType = SelectorType.TAG,
+        selectorExpression = OrderInfoTag.ORDER_INFO_TAG
 )
 public class OrderInfoSyncConsumer implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener {
 
