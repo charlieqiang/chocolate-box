@@ -8,6 +8,7 @@ import cn.charlie.order.info.service.builder.OrderInfoBuilder;
 import cn.charlie.order.info.entity.OrderInfo;
 import cn.charlie.order.info.entity.OrderParam;
 import cn.charlie.order.info.mapper.OrderInfoMapper;
+import com.alibaba.fastjson.JSON;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
         if (isDeducted) {
             OrderInfo orderInfo = createOrderInfo(orderParam);
-            orderInfoProducer.sendMessage("下单接口: 下单成功!", OrderInfoTopic.SYNC_ORDER_INFO, OrderInfoTag.ORDER_INFO_TAG);
+            orderInfoProducer.sendMessage(JSON.toJSON(orderInfo), OrderInfoTopic.SYNC_ORDER_INFO, OrderInfoTag.ORDER_INFO_TAG);
             return orderInfo;
         } else {
             throw new Exception("下单接口: 库存扣减失败!");
