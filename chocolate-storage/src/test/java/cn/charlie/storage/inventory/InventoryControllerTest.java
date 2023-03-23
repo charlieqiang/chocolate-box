@@ -33,16 +33,19 @@ public class InventoryControllerTest extends SpringServiceTest {
         Long itemId = inventoryParam.getItemId();
         Integer operateQty = inventoryParam.getOperateQty();
         Inventory inventoryBefore = inventoryMapper.queryInventoryByItemId(itemId);
+        testOperateInventory(inventoryParam);
+
+        Inventory inventoryAfter = inventoryMapper.queryInventoryByItemId(itemId);
+        testInventory(inventoryBefore, inventoryAfter, operateQty);
+    }
+
+    private void testOperateInventory(InventoryParam inventoryParam) throws Exception {
         final Map<String, String> header = Maps.newHashMap();
         ResultActions resultActions = returnPutResultActions("/inventory", inventoryParam, header);
-
         String exp = "$.data";
         Boolean expectedValue = true;
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(exp).value(expectedValue));
-
-        Inventory inventoryAfter = inventoryMapper.queryInventoryByItemId(itemId);
-        testInventory(inventoryBefore, inventoryAfter, operateQty);
     }
 
     private void testInventory(Inventory inventoryBefore, Inventory inventoryAfter, Integer operatedQty) {

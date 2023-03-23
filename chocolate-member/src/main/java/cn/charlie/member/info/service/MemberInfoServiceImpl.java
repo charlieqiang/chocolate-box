@@ -1,6 +1,8 @@
 package cn.charlie.member.info.service;
 
-import cn.charlie.common.entity.snowflakeid.SnowflakeIdWorker;
+import cn.charlie.member.info.builder.MemberInfoBuilder;
+import cn.charlie.member.info.constant.KeyConstant;
+import cn.charlie.member.info.constant.LockConstant;
 import cn.charlie.member.info.eemapper.MemberInfoEeMapper;
 import cn.charlie.member.info.entity.MemberInfo;
 import cn.charlie.member.info.entity.MemberInfoParam;
@@ -35,7 +37,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
     @Override
     public MemberInfo createMemberInfoByEs(MemberInfoParam memberInfoParam) throws Exception {
-        MemberInfo memberInfo = buildMemberInfo(memberInfoParam);
+        MemberInfo memberInfo = MemberInfoBuilder.buildMemberInfo(memberInfoParam);
         Integer affectedRows = memberInfoEeMapper.insert(memberInfo);
         if (affectedRows > 0) {
             return memberInfo;
@@ -44,18 +46,6 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         }
     }
 
-    private MemberInfo buildMemberInfo(MemberInfoParam memberInfoParam) throws Exception {
-        MemberInfo memberInfo = new MemberInfo();
-        if (ObjectUtils.isEmpty(memberInfoParam)) {
-            throw new Exception("用户创建失败: 参数不能为空!");
-        }
-        long id = SnowflakeIdWorker.getInstance().nextId();
-        memberInfo.setId(id);
-        memberInfo.setName(memberInfoParam.getName());
-        memberInfo.setSex(memberInfoParam.getSex());
-        memberInfo.setAge(memberInfoParam.getAge());
-        return memberInfo;
-    }
 
     @Override
     public List<MemberInfo> getAllMemberInfoByEs() {
@@ -70,31 +60,32 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     @Autowired
     private RedissonClient redissonClient;
 
-    private static final String MEMBER_INFO_NAME_KEY = "MEMBER_INFO_NAME_KEY";
-    private static final String MEMBER_INFO_NAME_LOCK = "MEMBER_INFO_NAME_LOCK";
-
     @Override
-    public String addMemberNameByRedis(String name) throws Exception {
-        RLock nameLock = redissonClient.getLock(MEMBER_INFO_NAME_LOCK);
+    public MemberInfo addMemberByRedis(MemberInfoParam memberInfoParam) throws Exception {
+        if (ObjectUtils.isEmpty(memberInfoParam)) {
+            throw new Exception("参数不能为空");
+        }
+        RLock nameLock = redissonClient.getLock(LockConstant.MEMBER_INFO_NAME_LOCK);
 
         if (nameLock.isLocked()) {
-            throw new Exception("用户名称添加中...");
+            throw new Exception("用户添加中...");
         }
         nameLock.lock();
         try {
-            redisTemplate.opsForValue().set(MEMBER_INFO_NAME_KEY, name);
+            redisTemplate.opsForValue().set(KeyConstant.MEMBER_INFO_NAME_KEY, memberInfoParam.getName());
         } catch (Exception e) {
-            System.out.println("用户名称添加失败: " + e);
-            throw new Exception("用户名称添加失败", e);
+            System.out.println("用户添加失败: " + e);
+            throw new Exception("用户添加失败", e);
         } finally {
             nameLock.unlock();
         }
-        return name;
+        MemberInfo memberInfo = MemberInfoBuilder.buildMemberInfo(memberInfoParam);
+        return memberInfo;
     }
 
     @Override
     public String getMemberNameByRedis() {
-        Object name = redisTemplate.opsForValue().get(MEMBER_INFO_NAME_KEY);
+        Object name = redisTemplate.opsForValue().get(KeyConstant.MEMBER_INFO_NAME_KEY);
         if (null == name) {
             return "";
         }
@@ -104,8 +95,12 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
     @Override
     @Transactional
-    public String addNameInTransactionByRedis(String name) {
-        redisTemplate.opsForValue().set(MEMBER_INFO_NAME_KEY, name);
-        return name;
+    public MemberInfo addMemberInTransactionByRedis(MemberInfoParam memberInfoParam) throws Exception {
+        if (ObjectUtils.isEmpty(memberInfoParam)) {
+            throw new Exception("参数不能为空");
+        }
+        redisTemplate.opsForValue().set(KeyConstant.MEMBER_INFO_NAME_KEY, memberInfoParam.getName());
+        MemberInfo memberInfo = MemberInfoBuilder.buildMemberInfo(memberInfoParam);
+        return memberInfo;
     }
 }

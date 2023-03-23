@@ -28,9 +28,9 @@ public class MemberInfoController {
         return Result.success(memberInfoService.getAllMemberInfo());
     }
 
-    @PostMapping("/name")
-    public Result<String> addMemberNameByRedis(@RequestBody String name) throws Exception {
-        return Result.success(memberInfoService.addMemberNameByRedis(name));
+    @PostMapping("")
+    public Result<MemberInfo> addMemberByRedis(@RequestBody MemberInfoParam memberInfoParam) throws Exception {
+        return Result.success(memberInfoService.addMemberByRedis(memberInfoParam));
     }
 
     @GetMapping("/name")
@@ -48,8 +48,8 @@ public class MemberInfoController {
         return Result.success(memberInfoService.getAllMemberInfoByEs());
     }
 
-    @PostMapping("/tx/name")
-    public Result<String> addNameInTransactionByRedis(@RequestBody String name) throws Exception {
-        return Result.success(memberInfoService.addNameInTransactionByRedis(name));
+    @PostMapping("/tx")
+    public Result<MemberInfo> addMemberInTransactionByRedis(@RequestBody MemberInfoParam memberInfoParam) throws Exception {
+        return Result.success(memberInfoService.addMemberInTransactionByRedis(memberInfoParam));
     }
 }

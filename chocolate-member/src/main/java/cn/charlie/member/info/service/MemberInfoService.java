@@ -34,12 +34,12 @@ public interface MemberInfoService {
     MemberInfo createMemberInfoByEs(MemberInfoParam memberInfoParam) throws Exception;
 
     /**
-     * 添加成员姓名到Redis缓存
+     * 添加成员到Redis缓存
      *
-     * @param name 姓名
+     * @param memberInfoParam 成员参数
      * @return 结果
      */
-    String addMemberNameByRedis(String name) throws Exception;
+    MemberInfo addMemberByRedis(MemberInfoParam memberInfoParam) throws Exception;
 
     /**
      * 通过Redis查询成员姓名
@@ -51,8 +51,8 @@ public interface MemberInfoService {
     /**
      * 通过事务添加成员姓名到Redis缓存
      *
-     * @param name 姓名
+     * @param memberInfoParam 成员参数
      * @return 结果
      */
-    String addNameInTransactionByRedis(String name);
+    MemberInfo addMemberInTransactionByRedis(MemberInfoParam memberInfoParam) throws Exception;
 }
