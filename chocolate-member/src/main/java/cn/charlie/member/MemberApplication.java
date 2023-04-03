@@ -2,16 +2,14 @@ package cn.charlie.member;
 
 import cn.easyes.starter.register.EsMapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.SpringCloudApplication;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author charlie
  * @date 3/5/2023 10:30 PM
  **/
-@SpringBootApplication
-@EnableDiscoveryClient
+@SpringCloudApplication
 @MapperScan("cn.charlie.member.*.mapper")
 @EsMapperScan("cn.charlie.member.*.eemapper")
 public class MemberApplication {
